@@ -1,0 +1,13 @@
+
+[
+  { "id": "p001", "nombre": "Portátil Gamer XZ", "sucursal": "Central", "cantidad": 15, "minimo": 5, "categoria": "Portátiles" },
+  { "id": "p002", "nombre": "Monitor Curvo 32\"", "sucursal": "Norte", "cantidad": 8, "minimo": 3, "categoria": "Monitores" },
+  { "id": "p003", "nombre": "Teclado Mecánico RGB", "sucursal": "Sur", "cantidad": 25, "minimo": 10, "categoria": "Periféricos" },
+  { "id": "p004", "nombre": "Mouse Inalámbrico Pro", "sucursal": "Central", "cantidad": 30, "minimo": 15, "categoria": "Periféricos" },
+  { "id": "p005", "nombre": "Silla Ergonómica Alfa", "sucursal": "Norte", "cantidad": 10, "minimo": 4, "categoria": "Mobiliario" },
+  { "id": "p006", "nombre": "Software Antivirus Premium", "sucursal": "Central", "cantidad": 50, "minimo": 20, "categoria": "Software" },
+  { "id": "p007", "nombre": "Disco SSD 1TB NVMe", "sucursal": "Sur", "cantidad": 12, "minimo": 6, "categoria": "Almacenamiento" },
+  { "id": "p008", "nombre": "Memoria RAM 16GB DDR4", "sucursal": "Norte", "cantidad": 22, "minimo": 10, "categoria": "Componentes" },
+  { "id": "p009", "nombre": "Webcam HD Pro", "sucursal": "Central", "cantidad": 18, "minimo": 8, "categoria": "Periféricos" },
+  { "id": "p010", "nombre": "Router WiFi 6 Mesh", "sucursal": "Sur", "cantidad": 7, "minimo": 3, "categoria": "Redes" }
+]

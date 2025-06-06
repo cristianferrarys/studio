@@ -1,0 +1,13 @@
+
+[
+  { "id": "t001", "fecha": "2023-10-01", "descripcion": "Venta de Portátil Gamer XZ", "tipo": "Ingreso", "monto": 1250.75, "sucursal": "Central" },
+  { "id": "t002", "fecha": "2023-10-01", "descripcion": "Pago de alquiler local", "tipo": "Egreso", "monto": 800.00, "sucursal": "Norte" },
+  { "id": "t003", "fecha": "2023-10-02", "descripcion": "Compra de insumos de oficina", "tipo": "Egreso", "monto": 75.50, "sucursal": "Central" },
+  { "id": "t004", "fecha": "2023-10-03", "descripcion": "Venta de Software Antivirus", "tipo": "Ingreso", "monto": 49.99, "sucursal": "Sur" },
+  { "id": "t005", "fecha": "2023-10-03", "descripcion": "Servicio de mantenimiento PC", "tipo": "Ingreso", "monto": 120.00, "sucursal": "Norte" },
+  { "id": "t006", "fecha": "2023-10-04", "descripcion": "Pago de servicios (luz, agua)", "tipo": "Egreso", "monto": 150.20, "sucursal": "Central" },
+  { "id": "t007", "fecha": "2023-10-05", "descripcion": "Venta de Monitor Curvo 32\"", "tipo": "Ingreso", "monto": 450.00, "sucursal": "Norte" },
+  { "id": "t008", "fecha": "2023-10-05", "descripcion": "Devolución de mercancía (teclado defectuoso)", "tipo": "Egreso", "monto": 65.00, "sucursal": "Sur" },
+  { "id": "t009", "fecha": "2023-10-06", "descripcion": "Venta de Silla Ergonómica", "tipo": "Ingreso", "monto": 220.00, "sucursal": "Central" },
+  { "id": "t010", "fecha": "2023-10-07", "descripcion": "Publicidad en Redes Sociales", "tipo": "Egreso", "monto": 100.00, "sucursal": "Todas" }
+]
