@@ -7,9 +7,10 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Button } from '@/components/ui/button';
-import { ArrowUpDown, Filter } from 'lucide-react';
+import { ArrowUpDown, PlusCircle } from 'lucide-react';
 import type { Transaction } from '@/types';
 import { Skeleton } from '@/components/ui/skeleton';
+import { AddTransactionForm, type TransactionFormData } from '@/components/custom/AddTransactionForm';
 
 type SortKey = keyof Transaction;
 
@@ -20,11 +21,15 @@ export default function TransaccionesPage() {
   const [filterType, setFilterType] = useState<'all' | 'Ingreso' | 'Egreso'>('all');
   const [filterBranch, setFilterBranch] = useState('all');
   const [sortConfig, setSortConfig] = useState<{ key: SortKey; direction: 'ascending' | 'descending' } | null>(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const res = await fetch('/data/transactions.json');
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
         const data = await res.json();
         setTransactions(data);
       } catch (error) {
@@ -38,8 +43,19 @@ export default function TransaccionesPage() {
 
   const uniqueBranches = useMemo(() => {
     const branches = new Set(transactions.map(t => t.sucursal));
-    return ['all', ...Array.from(branches)];
+    return ['all', ...Array.from(branches).filter(b => b && b !== 'Todas')]; // Filter out potential "Todas" from data
   }, [transactions]);
+
+  const handleAddTransaction = (data: TransactionFormData) => {
+    const newTransaction: Transaction = {
+      id: `t${Math.random().toString(36).substring(2, 9)}`, // Simple unique ID
+      fecha: new Date().toISOString().split('T')[0], // Current date
+      ...data,
+      monto: Number(data.monto)
+    };
+    setTransactions(prevTransactions => [newTransaction, ...prevTransactions]);
+    setIsAddModalOpen(false);
+  };
 
   const filteredTransactions = useMemo(() => {
     let _items = [...transactions];
@@ -59,10 +75,21 @@ export default function TransaccionesPage() {
 
     if (sortConfig !== null) {
       _items.sort((a, b) => {
-        if (a[sortConfig.key] < b[sortConfig.key]) {
+        // Ensure a[sortConfig.key] and b[sortConfig.key] are comparable
+        const valA = a[sortConfig.key];
+        const valB = b[sortConfig.key];
+
+        if (typeof valA === 'string' && typeof valB === 'string') {
+          return sortConfig.direction === 'ascending' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        }
+        if (typeof valA === 'number' && typeof valB === 'number') {
+          return sortConfig.direction === 'ascending' ? valA - valB : valB - valA;
+        }
+        // Fallback for other types or mixed types (simple comparison)
+        if (valA < valB) {
           return sortConfig.direction === 'ascending' ? -1 : 1;
         }
-        if (a[sortConfig.key] > b[sortConfig.key]) {
+        if (valA > valB) {
           return sortConfig.direction === 'ascending' ? 1 : -1;
         }
         return 0;
@@ -92,7 +119,10 @@ export default function TransaccionesPage() {
         <PageTitle title="Listado de Transacciones" subtitle="Explore todas las transacciones financieras registradas." />
         <Card className="shadow-lg">
           <CardHeader>
-            <CardTitle className="font-headline">Filtros</CardTitle>
+             <div className="flex justify-between items-center">
+              <CardTitle className="font-headline">Filtros y Acciones</CardTitle>
+               <Skeleton className="h-10 w-40" />
+            </div>
             <div className="flex flex-col md:flex-row gap-4 pt-2">
               <Skeleton className="h-10 w-full md:w-1/3" />
               <Skeleton className="h-10 w-full md:w-1/4" />
@@ -119,35 +149,41 @@ export default function TransaccionesPage() {
       <PageTitle title="Listado de Transacciones" subtitle="Explore todas las transacciones financieras registradas." />
       <Card className="shadow-lg">
         <CardHeader>
-          <div className="flex flex-col md:flex-row gap-4 items-center">
-            <Input
-              placeholder="Buscar por descripción o ID..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="max-w-sm flex-grow"
-            />
-            <div className="flex gap-2 flex-wrap">
-              <Select value={filterType} onValueChange={(value: 'all' | 'Ingreso' | 'Egreso') => setFilterType(value)}>
-                <SelectTrigger className="w-[150px]">
-                  <SelectValue placeholder="Tipo" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">Todos los Tipos</SelectItem>
-                  <SelectItem value="Ingreso">Ingreso</SelectItem>
-                  <SelectItem value="Egreso">Egreso</SelectItem>
-                </SelectContent>
-              </Select>
-              <Select value={filterBranch} onValueChange={(value) => setFilterBranch(value)}>
-                <SelectTrigger className="w-[180px]">
-                  <SelectValue placeholder="Sucursal" />
-                </SelectTrigger>
-                <SelectContent>
-                  {uniqueBranches.map(branch => (
-                    <SelectItem key={branch} value={branch}>{branch === 'all' ? 'Todas las Sucursales' : branch}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+          <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
+            <div className="flex flex-col md:flex-row gap-4 items-center flex-grow">
+              <Input
+                placeholder="Buscar por descripción o ID..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="max-w-sm flex-grow"
+              />
+              <div className="flex gap-2 flex-wrap">
+                <Select value={filterType} onValueChange={(value: 'all' | 'Ingreso' | 'Egreso') => setFilterType(value)}>
+                  <SelectTrigger className="w-[150px]">
+                    <SelectValue placeholder="Tipo" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todos los Tipos</SelectItem>
+                    <SelectItem value="Ingreso">Ingreso</SelectItem>
+                    <SelectItem value="Egreso">Egreso</SelectItem>
+                  </SelectContent>
+                </Select>
+                <Select value={filterBranch} onValueChange={(value) => setFilterBranch(value)}>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Sucursal" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {uniqueBranches.map(branch => (
+                      <SelectItem key={branch} value={branch}>{branch === 'all' ? 'Todas las Sucursales' : branch}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
+            <Button onClick={() => setIsAddModalOpen(true)} className="mt-4 md:mt-0">
+              <PlusCircle className="mr-2 h-4 w-4" />
+              Añadir Transacción
+            </Button>
           </div>
         </CardHeader>
         <CardContent>
@@ -198,7 +234,12 @@ export default function TransaccionesPage() {
           )}
         </CardContent>
       </Card>
+      <AddTransactionForm 
+        isOpen={isAddModalOpen} 
+        onOpenChange={setIsAddModalOpen}
+        onSubmitForm={handleAddTransaction}
+        branches={uniqueBranches.filter(b => b !== 'all')} 
+      />
     </div>
   );
 }
-
