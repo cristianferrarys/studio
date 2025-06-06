@@ -42,7 +42,7 @@ export default function TransaccionesPage() {
   }, [transactions]);
 
   const filteredTransactions = useMemo(() => {
-    let_items = [...transactions];
+    let _items = [...transactions];
 
     if (searchTerm) {
       _items = _items.filter(t =>
