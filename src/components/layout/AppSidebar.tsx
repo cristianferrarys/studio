@@ -35,7 +35,7 @@ export function AppSidebar() {
   const filteredNavItems = navItems.filter(item => item.allowedRoles.includes(currentRole));
 
   return (
-    <Sidebar collapsible="icon" side="left" variant="sidebar" defaultOpen={true}>
+    <Sidebar collapsible="icon" side="left" variant="sidebar">
       <SidebarHeader className="p-4 flex items-center justify-between">
         <Link href="/dashboard" className="flex items-center gap-2">
           <Image src="https://placehold.co/32x32.png" alt="Logo" width={32} height={32} data-ai-hint="logo abstract" className="rounded-sm"/>
@@ -80,4 +80,3 @@ export function AppSidebar() {
     </Sidebar>
   );
 }
-
