@@ -47,7 +47,7 @@ export default function GestionUsuariosPage() {
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <Card className="shadow-lg">
-          <CardHeader>
+          <CardHeader className="p-4 sm:p-6">
             <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
               <CardTitle className="font-headline text-xl">Listado de Usuarios</CardTitle>
               <Button className="w-full sm:w-auto">
@@ -58,7 +58,7 @@ export default function GestionUsuariosPage() {
           <CardContent className="p-0">
             <ul role="list" className="divide-y divide-border">
               {users.map((user) => (
-                <li key={user.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-x-6 gap-y-2 p-4 hover:bg-muted/50 transition-colors">
+                <li key={user.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-x-6 gap-y-2 p-3 sm:p-4 hover:bg-muted/50 transition-colors">
                   <div className="flex min-w-0 gap-x-4">
                     <Image 
                       className="h-12 w-12 flex-none rounded-full bg-muted" 
@@ -85,11 +85,11 @@ export default function GestionUsuariosPage() {
         </Card>
 
         <Card className="shadow-lg">
-          <CardHeader>
+          <CardHeader className="p-4 sm:p-6">
              <CardTitle className="font-headline text-xl">Gestión de Sucursales</CardTitle>
              <CardDescription>Añada nuevas sucursales o visualice las existentes.</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 sm:p-6">
             <div className="space-y-4">
               <div>
                 <h3 className="text-md font-semibold mb-2">Añadir Nueva Sucursal</h3>

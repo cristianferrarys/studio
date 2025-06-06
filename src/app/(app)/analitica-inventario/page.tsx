@@ -83,11 +83,11 @@ export default function AnaliticaInventarioPage() {
       <PageTitle title="Análisis de Inventario" subtitle="Visualice tendencias y métricas clave de su inventario." />
       <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
         <Card className="shadow-lg xl:col-span-1 lg:col-span-2"> {/* Adjusted span for better layout on large screens */}
-          <CardHeader>
+          <CardHeader className="p-4 sm:p-6">
             <CardTitle className="font-headline">Productos Más Vendidos</CardTitle>
             <CardDescription>Unidades vendidas por producto en el último período.</CardDescription>
           </CardHeader>
-          <CardContent className="h-[300px] sm:h-[350px]"> {/* Slightly taller for better label display */}
+          <CardContent className="h-[300px] sm:h-[350px] p-4 pt-0 sm:p-6 sm:pt-0"> {/* Slightly taller for better label display */}
              <ChartContainer config={barChartConfig} className="w-full h-full">
               <BarChart data={analytics.productosMasVendidos} accessibilityLayer margin={{ top: 5, right: isMobile ? 5 : 20, left: isMobile ? 0 : -10, bottom: isMobile ? 50 : 30 }}>
                 <CartesianGrid vertical={false} />
@@ -114,11 +114,11 @@ export default function AnaliticaInventarioPage() {
         </Card>
 
         <Card className="shadow-lg">
-          <CardHeader>
+          <CardHeader className="p-4 sm:p-6">
             <CardTitle className="font-headline">Valor de Inventario por Sucursal</CardTitle>
              <CardDescription>Distribución del valor total del inventario.</CardDescription>
           </CardHeader>
-          <CardContent className="h-[300px] sm:h-[350px] flex items-center justify-center"> {/* Slightly taller */}
+          <CardContent className="h-[300px] sm:h-[350px] flex items-center justify-center p-4 pt-0 sm:p-6 sm:pt-0"> {/* Slightly taller */}
             <ChartContainer config={dynamicPieChartConfig} className="w-full aspect-square max-h-[250px] sm:max-h-[300px]">
               <PieChart>
                 <RechartsTooltip 
@@ -158,11 +158,11 @@ export default function AnaliticaInventarioPage() {
       </div>
       <div className="grid gap-6 md:grid-cols-1 mt-6">
          <Card className="shadow-lg">
-          <CardHeader>
+          <CardHeader className="p-4 sm:p-6">
             <CardTitle className="font-headline">Rotación de Inventario</CardTitle>
             <CardDescription>Tasa de rotación mensual del inventario.</CardDescription>
           </CardHeader>
-          <CardContent className="h-[300px] sm:h-[350px]">
+          <CardContent className="h-[300px] sm:h-[350px] p-4 pt-0 sm:p-6 sm:pt-0">
             <ChartContainer config={lineChartConfig} className="w-full h-full">
               <LineChart data={analytics.rotacionInventario} margin={{ top: 5, right: isMobile ? 5 : 20, left: isMobile ? 0 : -10, bottom: 5 }} accessibilityLayer>
                 <CartesianGrid vertical={false} />
