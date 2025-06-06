@@ -1,0 +1,18 @@
+
+{
+  "ingresosTotales": 28570.90,
+  "gastosTotales": 11250.30,
+  "beneficioNeto": 17320.60,
+  "ingresosPorSucursal": [
+    { "sucursal": "Central", "ingresos": 15200.00, "gastos": 5500.00 },
+    { "sucursal": "Norte", "ingresos": 8370.40, "gastos": 3750.10 },
+    { "sucursal": "Sur", "ingresos": 5000.50, "gastos": 2000.20 }
+  ],
+  "gastosPorCategoria": [
+     { "categoria": "Alquileres", "monto": 2400.00 },
+     { "categoria": "Salarios", "monto": 4500.00 },
+     { "categoria": "Proveedores", "monto": 3000.00 },
+     { "categoria": "Marketing", "monto": 500.30 },
+     { "categoria": "Servicios", "monto": 850.00 }
+  ]
+}

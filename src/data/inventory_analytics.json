@@ -1,0 +1,31 @@
+
+{
+  "rotacionInventario": [
+    { "mes": "Ene", "tasa": 1.5 }, 
+    { "mes": "Feb", "tasa": 1.8 },
+    { "mes": "Mar", "tasa": 1.6 },
+    { "mes": "Abr", "tasa": 2.0 },
+    { "mes": "May", "tasa": 1.9 },
+    { "mes": "Jun", "tasa": 2.1 }
+  ],
+  "productosMasVendidos": [
+    { "nombre": "Portátil Gamer XZ", "unidades": 120, "fill": "var(--color-chart-1)" }, 
+    { "nombre": "Teclado Mecánico RGB", "unidades": 95, "fill": "var(--color-chart-2)" },
+    { "nombre": "Mouse Inalámbrico Pro", "unidades": 80, "fill": "var(--color-chart-3)" },
+    { "nombre": "Software Antivirus", "unidades": 70, "fill": "var(--color-chart-4)" },
+    { "nombre": "Monitor Curvo 32\"", "unidades": 60, "fill": "var(--color-chart-5)" }
+  ],
+  "valorInventarioPorSucursal": [
+    { "sucursal": "Central", "valor": 15000, "fill": "var(--color-chart-1)" }, 
+    { "sucursal": "Norte", "valor": 9500, "fill": "var(--color-chart-2)" },
+    { "sucursal": "Sur", "valor": 7200, "fill": "var(--color-chart-3)" }
+  ],
+  "tendenciaStock": [
+    {"fecha": "2023-01-01", "valorTotal": 28000, "unidadesTotales": 300},
+    {"fecha": "2023-02-01", "valorTotal": 29500, "unidadesTotales": 310},
+    {"fecha": "2023-03-01", "valorTotal": 27000, "unidadesTotales": 290},
+    {"fecha": "2023-04-01", "valorTotal": 31000, "unidadesTotales": 320},
+    {"fecha": "2023-05-01", "valorTotal": 30000, "unidadesTotales": 305},
+    {"fecha": "2023-06-01", "valorTotal": 32500, "unidadesTotales": 330}
+  ]
+}
