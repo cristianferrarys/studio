@@ -50,14 +50,15 @@ interface AddTransactionFormProps {
   onOpenChange: (open: boolean) => void;
   onSubmitForm: (data: TransactionFormData) => void;
   branches: string[];
+  isLoadingBranches?: boolean; // Added to handle loading state
 }
 
-export function AddTransactionForm({ isOpen, onOpenChange, onSubmitForm, branches }: AddTransactionFormProps) {
+export function AddTransactionForm({ isOpen, onOpenChange, onSubmitForm, branches, isLoadingBranches }: AddTransactionFormProps) {
   const form = useForm<TransactionFormData>({
     resolver: zodResolver(transactionFormSchema),
     defaultValues: {
       descripcion: "",
-      tipo: undefined, // Or 'Ingreso' as a default
+      tipo: undefined, 
       monto: 0,
       sucursal: "",
     },
@@ -65,11 +66,14 @@ export function AddTransactionForm({ isOpen, onOpenChange, onSubmitForm, branche
 
   const onSubmit = (data: TransactionFormData) => {
     onSubmitForm(data);
-    form.reset(); // Reset form after submission
+    form.reset(); 
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
+    <Dialog open={isOpen} onOpenChange={(open) => {
+      if (!open) form.reset(); // Reset form when dialog closes
+      onOpenChange(open);
+    }}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Añadir Nueva Transacción</DialogTitle>
@@ -135,18 +139,24 @@ export function AddTransactionForm({ isOpen, onOpenChange, onSubmitForm, branche
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Sucursal</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select onValueChange={field.onChange} defaultValue={field.value} disabled={isLoadingBranches}>
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Seleccione una sucursal" />
+                        <SelectValue placeholder={isLoadingBranches ? "Cargando..." : "Seleccione una sucursal"} />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      {branches.map((branch) => (
-                        <SelectItem key={branch} value={branch}>
-                          {branch}
-                        </SelectItem>
-                      ))}
+                      {isLoadingBranches ? (
+                        <SelectItem value="loading" disabled>Cargando sucursales...</SelectItem>
+                      ) : branches.length > 0 ? (
+                        branches.map((branch) => (
+                          <SelectItem key={branch} value={branch}>
+                            {branch}
+                          </SelectItem>
+                        ))
+                      ) : (
+                        <SelectItem value="no-branches" disabled>No hay sucursales disponibles</SelectItem>
+                      )}
                     </SelectContent>
                   </Select>
                   <FormMessage />

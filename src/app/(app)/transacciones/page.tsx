@@ -11,6 +11,7 @@ import { ArrowUpDown, PlusCircle } from 'lucide-react';
 import type { Transaction } from '@/types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AddTransactionForm, type TransactionFormData } from '@/components/custom/AddTransactionForm';
+import { useBranches } from '@/contexts/BranchContext'; // Import useBranches
 
 type SortKey = keyof Transaction;
 
@@ -22,6 +23,8 @@ export default function TransaccionesPage() {
   const [filterBranch, setFilterBranch] = useState('all');
   const [sortConfig, setSortConfig] = useState<{ key: SortKey; direction: 'ascending' | 'descending' } | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
+  const { branches: contextBranches, isLoadingBranches } = useBranches(); // Get branches from context
 
   useEffect(() => {
     async function fetchData() {
@@ -41,10 +44,14 @@ export default function TransaccionesPage() {
     fetchData();
   }, []);
 
-  const uniqueBranches = useMemo(() => {
-    const branches = new Set(transactions.map(t => t.sucursal));
-    return ['all', ...Array.from(branches).filter(b => b && b !== 'Todas')]; // Filter out potential "Todas" from data
-  }, [transactions]);
+  const branchesForFilter = useMemo(() => {
+    return ['all', ...contextBranches];
+  }, [contextBranches]);
+
+  // For AddTransactionForm, it expects just the branch names, not 'all'
+  const branchesForForm = useMemo(() => {
+    return contextBranches;
+  }, [contextBranches]);
 
   const handleAddTransaction = (data: TransactionFormData) => {
     const newTransaction: Transaction = {
@@ -75,7 +82,6 @@ export default function TransaccionesPage() {
 
     if (sortConfig !== null) {
       _items.sort((a, b) => {
-        // Ensure a[sortConfig.key] and b[sortConfig.key] are comparable
         const valA = a[sortConfig.key];
         const valB = b[sortConfig.key];
 
@@ -85,7 +91,6 @@ export default function TransaccionesPage() {
         if (typeof valA === 'number' && typeof valB === 'number') {
           return sortConfig.direction === 'ascending' ? valA - valB : valB - valA;
         }
-        // Fallback for other types or mixed types (simple comparison)
         if (valA < valB) {
           return sortConfig.direction === 'ascending' ? -1 : 1;
         }
@@ -168,14 +173,18 @@ export default function TransaccionesPage() {
                     <SelectItem value="Egreso">Egreso</SelectItem>
                   </SelectContent>
                 </Select>
-                <Select value={filterBranch} onValueChange={(value) => setFilterBranch(value)}>
+                <Select value={filterBranch} onValueChange={(value) => setFilterBranch(value)} disabled={isLoadingBranches}>
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Sucursal" />
                   </SelectTrigger>
                   <SelectContent>
-                    {uniqueBranches.map(branch => (
-                      <SelectItem key={branch} value={branch}>{branch === 'all' ? 'Todas las Sucursales' : branch}</SelectItem>
-                    ))}
+                    {isLoadingBranches ? (
+                       <SelectItem value="loading" disabled>Cargando sucursales...</SelectItem>
+                    ) : (
+                      branchesForFilter.map(branch => (
+                        <SelectItem key={branch} value={branch}>{branch === 'all' ? 'Todas las Sucursales' : branch}</SelectItem>
+                      ))
+                    )}
                   </SelectContent>
                 </Select>
               </div>
@@ -238,7 +247,8 @@ export default function TransaccionesPage() {
         isOpen={isAddModalOpen} 
         onOpenChange={setIsAddModalOpen}
         onSubmitForm={handleAddTransaction}
-        branches={uniqueBranches.filter(b => b !== 'all')} 
+        branches={branchesForForm} // Pass branches from context
+        isLoadingBranches={isLoadingBranches}
       />
     </div>
   );

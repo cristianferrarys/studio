@@ -10,6 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import type { InventoryItem } from '@/types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
+import { useBranches } from '@/contexts/BranchContext'; // Import useBranches
 
 export default function InventarioPage() {
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
@@ -17,6 +18,8 @@ export default function InventarioPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterBranch, setFilterBranch] = useState('all');
   const [filterCategory, setFilterCategory] = useState('all');
+
+  const { branches: contextBranches, isLoadingBranches } = useBranches(); // Get branches from context
 
   useEffect(() => {
     async function fetchData() {
@@ -33,10 +36,9 @@ export default function InventarioPage() {
     fetchData();
   }, []);
 
-  const uniqueBranches = useMemo(() => {
-    const branches = new Set(inventory.map(item => item.sucursal));
-    return ['all', ...Array.from(branches)];
-  }, [inventory]);
+  const branchesForFilter = useMemo(() => {
+    return ['all', ...contextBranches];
+  }, [contextBranches]);
 
   const uniqueCategories = useMemo(() => {
     const categories = new Set(inventory.map(item => item.categoria));
@@ -54,9 +56,9 @@ export default function InventarioPage() {
 
   const getStockStatus = (item: InventoryItem): { text: string; variant: "default" | "secondary" | "destructive" | "outline" } => {
     if (item.cantidad === 0) return { text: 'Agotado', variant: 'destructive' };
-    if (item.cantidad < item.minimo) return { text: 'Bajo Stock', variant: 'outline' }; // 'outline' often gets yellow/orange styling by themes
+    if (item.cantidad < item.minimo) return { text: 'Bajo Stock', variant: 'outline' }; 
     if (item.cantidad < item.minimo * 1.5) return { text: 'Stock Limitado', variant: 'secondary' };
-    return { text: 'En Stock', variant: 'default' }; // Default usually means green or positive
+    return { text: 'En Stock', variant: 'default' }; 
   };
 
   if (loading) {
@@ -100,14 +102,18 @@ export default function InventarioPage() {
               className="max-w-sm flex-grow"
             />
              <div className="flex gap-2 flex-wrap">
-              <Select value={filterBranch} onValueChange={(value) => setFilterBranch(value)}>
+              <Select value={filterBranch} onValueChange={(value) => setFilterBranch(value)} disabled={isLoadingBranches}>
                 <SelectTrigger className="w-[180px]">
                   <SelectValue placeholder="Sucursal" />
                 </SelectTrigger>
                 <SelectContent>
-                  {uniqueBranches.map(branch => (
-                    <SelectItem key={branch} value={branch}>{branch === 'all' ? 'Todas las Sucursales' : branch}</SelectItem>
-                  ))}
+                   {isLoadingBranches ? (
+                       <SelectItem value="loading" disabled>Cargando sucursales...</SelectItem>
+                    ) : (
+                      branchesForFilter.map(branch => (
+                        <SelectItem key={branch} value={branch}>{branch === 'all' ? 'Todas las Sucursales' : branch}</SelectItem>
+                      ))
+                    )}
                 </SelectContent>
               </Select>
               <Select value={filterCategory} onValueChange={(value) => setFilterCategory(value)}>
@@ -172,4 +178,3 @@ export default function InventarioPage() {
     </div>
   );
 }
-
