@@ -91,32 +91,34 @@ export default function InformesPage() {
             <CardDescription>Desglose de ingresos y gastos por cada ubicación.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Sucursal</TableHead>
-                  <TableHead className="text-right">Ingresos</TableHead>
-                  <TableHead className="text-right">Gastos</TableHead>
-                  <TableHead className="text-right">Beneficio</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {summary.ingresosPorSucursal.map((item) => (
-                  <TableRow key={item.sucursal}>
-                    <TableCell className="font-medium">{item.sucursal}</TableCell>
-                    <TableCell className="text-right text-green-600">
-                      ${item.ingresos.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </TableCell>
-                    <TableCell className="text-right text-red-600">
-                      ${item.gastos.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </TableCell>
-                     <TableCell className="text-right font-semibold">
-                      ${(item.ingresos - item.gastos).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </TableCell>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Sucursal</TableHead>
+                    <TableHead className="text-right">Ingresos</TableHead>
+                    <TableHead className="text-right">Gastos</TableHead>
+                    <TableHead className="text-right">Beneficio</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {summary.ingresosPorSucursal.map((item) => (
+                    <TableRow key={item.sucursal}>
+                      <TableCell className="font-medium">{item.sucursal}</TableCell>
+                      <TableCell className="text-right text-green-600">
+                        ${item.ingresos.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </TableCell>
+                      <TableCell className="text-right text-red-600">
+                        ${item.gastos.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </TableCell>
+                       <TableCell className="text-right font-semibold">
+                        ${(item.ingresos - item.gastos).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </CardContent>
         </Card>
 
@@ -126,24 +128,26 @@ export default function InformesPage() {
             <CardDescription>Distribución de los gastos en diferentes categorías.</CardDescription>
           </CardHeader>
           <CardContent>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Categoría</TableHead>
-                  <TableHead className="text-right">Monto</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {summary.gastosPorCategoria.map((item) => (
-                  <TableRow key={item.categoria}>
-                    <TableCell className="font-medium">{item.categoria}</TableCell>
-                    <TableCell className="text-right">
-                      ${item.monto.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </TableCell>
+            <div className="overflow-x-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Categoría</TableHead>
+                    <TableHead className="text-right">Monto</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {summary.gastosPorCategoria.map((item) => (
+                    <TableRow key={item.categoria}>
+                      <TableCell className="font-medium">{item.categoria}</TableCell>
+                      <TableCell className="text-right">
+                        ${item.monto.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </div>
           </CardContent>
         </Card>
       </div>

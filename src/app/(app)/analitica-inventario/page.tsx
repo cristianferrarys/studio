@@ -89,15 +89,15 @@ export default function AnaliticaInventarioPage() {
           </CardHeader>
           <CardContent className="h-[300px] sm:h-[350px]"> {/* Slightly taller for better label display */}
              <ChartContainer config={barChartConfig} className="w-full h-full">
-              <BarChart data={analytics.productosMasVendidos} accessibilityLayer margin={{ top: 5, right: isMobile ? 0 : 20, left: isMobile ? -30 : -10, bottom: isMobile ? 50 : 30 }}>
+              <BarChart data={analytics.productosMasVendidos} accessibilityLayer margin={{ top: 5, right: isMobile ? 5 : 20, left: isMobile ? 0 : -10, bottom: isMobile ? 50 : 30 }}>
                 <CartesianGrid vertical={false} />
                 <XAxis 
                   dataKey="nombre" 
                   tickLine={false} 
-                  tickMargin={10} 
+                  tickMargin={isMobile ? 5 : 10} 
                   angle={isMobile ? -60 : -30} 
                   textAnchor="end" 
-                  height={isMobile ? 80 : 60} 
+                  height={isMobile ? 90 : 60} 
                   interval={0} 
                   tick={{ fontSize: isMobile ? 9 : 12 }}
                 />
@@ -164,7 +164,7 @@ export default function AnaliticaInventarioPage() {
           </CardHeader>
           <CardContent className="h-[300px] sm:h-[350px]">
             <ChartContainer config={lineChartConfig} className="w-full h-full">
-              <LineChart data={analytics.rotacionInventario} margin={{ top: 5, right: isMobile ? 10 : 20, left: isMobile ? -25 : -10, bottom: 5 }} accessibilityLayer>
+              <LineChart data={analytics.rotacionInventario} margin={{ top: 5, right: isMobile ? 5 : 20, left: isMobile ? 0 : -10, bottom: 5 }} accessibilityLayer>
                 <CartesianGrid vertical={false} />
                 <XAxis dataKey="mes" tickLine={false} axisLine={false} tickMargin={8} tick={{ fontSize: isMobile ? 10 : 12 }} />
                 <YAxis tickLine={false} axisLine={false} tickMargin={8} domain={[0, 'dataMax + 0.5']} tick={{ fontSize: isMobile ? 10 : 12 }} />
