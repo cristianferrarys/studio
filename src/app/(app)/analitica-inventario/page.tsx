@@ -25,6 +25,15 @@ const COLORS = ["hsl(var(--chart-1))", "hsl(var(--chart-2))", "hsl(var(--chart-3
 export default function AnaliticaInventarioPage() {
   const [analytics, setAnalytics] = useState<InventoryAnalytics | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
 
   useEffect(() => {
     async function fetchData() {
@@ -73,22 +82,31 @@ export default function AnaliticaInventarioPage() {
     <div>
       <PageTitle title="Análisis de Inventario" subtitle="Visualice tendencias y métricas clave de su inventario." />
       <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-        <Card className="shadow-lg xl:col-span-2">
+        <Card className="shadow-lg xl:col-span-1 lg:col-span-2"> {/* Adjusted span for better layout on large screens */}
           <CardHeader>
             <CardTitle className="font-headline">Productos Más Vendidos</CardTitle>
             <CardDescription>Unidades vendidas por producto en el último período.</CardDescription>
           </CardHeader>
-          <CardContent className="h-[300px]">
+          <CardContent className="h-[300px] sm:h-[350px]"> {/* Slightly taller for better label display */}
              <ChartContainer config={barChartConfig} className="w-full h-full">
-              <BarChart data={analytics.productosMasVendidos} accessibilityLayer>
+              <BarChart data={analytics.productosMasVendidos} accessibilityLayer margin={{ top: 5, right: isMobile ? 0 : 20, left: isMobile ? -30 : -10, bottom: isMobile ? 50 : 30 }}>
                 <CartesianGrid vertical={false} />
-                <XAxis dataKey="nombre" tickLine={false} tickMargin={10} angle={-30} textAnchor="end" height={60} />
-                <YAxis />
+                <XAxis 
+                  dataKey="nombre" 
+                  tickLine={false} 
+                  tickMargin={10} 
+                  angle={isMobile ? -60 : -30} 
+                  textAnchor="end" 
+                  height={isMobile ? 80 : 60} 
+                  interval={0} 
+                  tick={{ fontSize: isMobile ? 9 : 12 }}
+                />
+                <YAxis tick={{ fontSize: isMobile ? 10 : 12 }} />
                 <RechartsTooltip 
                   cursor={false}
                   content={<ChartTooltipContent indicator="dot" />}
                 />
-                <Legend />
+                <Legend wrapperStyle={{fontSize: isMobile ? '10px' : '12px', paddingTop: isMobile ? '10px': '0px'}}/>
                 <Bar dataKey="unidades" radius={4} />
               </BarChart>
             </ChartContainer>
@@ -100,8 +118,8 @@ export default function AnaliticaInventarioPage() {
             <CardTitle className="font-headline">Valor de Inventario por Sucursal</CardTitle>
              <CardDescription>Distribución del valor total del inventario.</CardDescription>
           </CardHeader>
-          <CardContent className="h-[300px] flex items-center justify-center">
-            <ChartContainer config={dynamicPieChartConfig} className="w-full aspect-square max-h-[280px]">
+          <CardContent className="h-[300px] sm:h-[350px] flex items-center justify-center"> {/* Slightly taller */}
+            <ChartContainer config={dynamicPieChartConfig} className="w-full aspect-square max-h-[250px] sm:max-h-[300px]">
               <PieChart>
                 <RechartsTooltip 
                   cursor={false}
@@ -113,15 +131,16 @@ export default function AnaliticaInventarioPage() {
                   nameKey="sucursal" 
                   cx="50%" 
                   cy="50%" 
-                  outerRadius={100} 
+                  outerRadius={isMobile ? 80 : 100} 
                   labelLine={false}
-                  label={({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+                  label={({ cx, cy, midAngle, innerRadius, outerRadius, percent }) => {
                     const RADIAN = Math.PI / 180;
-                    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+                    // Adjusted radius for label positioning for better fit on mobile
+                    const radius = innerRadius + (outerRadius - innerRadius) * (isMobile ? 0.4 : 0.5); 
                     const x = cx + radius * Math.cos(-midAngle * RADIAN);
                     const y = cy + radius * Math.sin(-midAngle * RADIAN);
                     return (
-                      <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central" fontSize="10px">
+                      <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central" fontSize={isMobile ? "8px" : "10px"}>
                         {`${(percent * 100).toFixed(0)}%`}
                       </text>
                     );
@@ -131,7 +150,7 @@ export default function AnaliticaInventarioPage() {
                     <Cell key={`cell-${index}`} fill={entry.fill} />
                   ))}
                 </Pie>
-                <Legend />
+                <Legend wrapperStyle={{fontSize: isMobile ? '10px' : '12px'}}/>
               </PieChart>
             </ChartContainer>
           </CardContent>
@@ -143,17 +162,17 @@ export default function AnaliticaInventarioPage() {
             <CardTitle className="font-headline">Rotación de Inventario</CardTitle>
             <CardDescription>Tasa de rotación mensual del inventario.</CardDescription>
           </CardHeader>
-          <CardContent className="h-[300px]">
+          <CardContent className="h-[300px] sm:h-[350px]">
             <ChartContainer config={lineChartConfig} className="w-full h-full">
-              <LineChart data={analytics.rotacionInventario} margin={{ left: 12, right: 12 }} accessibilityLayer>
+              <LineChart data={analytics.rotacionInventario} margin={{ top: 5, right: isMobile ? 10 : 20, left: isMobile ? -25 : -10, bottom: 5 }} accessibilityLayer>
                 <CartesianGrid vertical={false} />
-                <XAxis dataKey="mes" tickLine={false} axisLine={false} tickMargin={8} />
-                <YAxis tickLine={false} axisLine={false} tickMargin={8} domain={[0, 'dataMax + 0.5']} />
+                <XAxis dataKey="mes" tickLine={false} axisLine={false} tickMargin={8} tick={{ fontSize: isMobile ? 10 : 12 }} />
+                <YAxis tickLine={false} axisLine={false} tickMargin={8} domain={[0, 'dataMax + 0.5']} tick={{ fontSize: isMobile ? 10 : 12 }} />
                  <RechartsTooltip 
                   cursor={false}
                   content={<ChartTooltipContent indicator="line" />}
                 />
-                <Legend />
+                <Legend wrapperStyle={{fontSize: isMobile ? '10px' : '12px'}}/>
                 <Line type="monotone" dataKey="tasa" strokeWidth={2} dot={true} />
               </LineChart>
             </ChartContainer>
@@ -163,4 +182,3 @@ export default function AnaliticaInventarioPage() {
     </div>
   );
 }
-

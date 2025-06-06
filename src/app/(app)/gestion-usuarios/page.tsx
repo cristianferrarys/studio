@@ -48,9 +48,9 @@ export default function GestionUsuariosPage() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <Card className="shadow-lg">
           <CardHeader>
-            <div className="mb-6 flex justify-between items-center">
+            <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
               <CardTitle className="font-headline text-xl">Listado de Usuarios</CardTitle>
-              <Button>
+              <Button className="w-full sm:w-auto">
                 <UserPlus className="mr-2 h-4 w-4" /> Añadir Usuario
               </Button>
             </div>
@@ -58,7 +58,7 @@ export default function GestionUsuariosPage() {
           <CardContent className="p-0">
             <ul role="list" className="divide-y divide-border">
               {users.map((user) => (
-                <li key={user.id} className="flex items-center justify-between gap-x-6 p-4 hover:bg-muted/50 transition-colors">
+                <li key={user.id} className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-x-6 gap-y-2 p-4 hover:bg-muted/50 transition-colors">
                   <div className="flex min-w-0 gap-x-4">
                     <Image 
                       className="h-12 w-12 flex-none rounded-full bg-muted" 
@@ -73,11 +73,11 @@ export default function GestionUsuariosPage() {
                       <p className="mt-1 truncate text-xs leading-5 text-muted-foreground">{user.email}</p>
                     </div>
                   </div>
-                  <div className="hidden sm:flex sm:flex-col sm:items-end">
+                  <div className="flex flex-col items-start sm:items-end w-full sm:w-auto">
                     <p className="text-sm leading-6 text-foreground">{user.role}</p>
                     <p className="mt-1 text-xs leading-5 text-muted-foreground">Sucursal: {user.branch}</p>
                   </div>
-                  <Button variant="outline" size="sm">Editar</Button>
+                  <Button variant="outline" size="sm" className="w-full mt-2 sm:mt-0 sm:w-auto">Editar</Button>
                 </li>
               ))}
             </ul>
@@ -93,7 +93,7 @@ export default function GestionUsuariosPage() {
             <div className="space-y-4">
               <div>
                 <h3 className="text-md font-semibold mb-2">Añadir Nueva Sucursal</h3>
-                <div className="flex space-x-2">
+                <div className="flex flex-col sm:flex-row sm:space-x-2 space-y-2 sm:space-y-0">
                   <Input 
                     type="text" 
                     placeholder="Nombre de la nueva sucursal" 
@@ -101,7 +101,7 @@ export default function GestionUsuariosPage() {
                     onChange={(e) => setNewBranchName(e.target.value)}
                     className="flex-grow"
                   />
-                  <Button onClick={handleAddBranch}>
+                  <Button onClick={handleAddBranch} className="w-full sm:w-auto">
                     <PlusCircle className="mr-2 h-4 w-4" /> Añadir
                   </Button>
                 </div>

@@ -99,11 +99,11 @@ export default function InventarioPage() {
               placeholder="Buscar por nombre o ID de producto..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="max-w-sm flex-grow"
+              className="w-full md:max-w-sm md:flex-grow"
             />
-             <div className="flex gap-2 flex-wrap">
+             <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
               <Select value={filterBranch} onValueChange={(value) => setFilterBranch(value)} disabled={isLoadingBranches}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-full sm:w-[180px]">
                   <SelectValue placeholder="Sucursal" />
                 </SelectTrigger>
                 <SelectContent>
@@ -117,7 +117,7 @@ export default function InventarioPage() {
                 </SelectContent>
               </Select>
               <Select value={filterCategory} onValueChange={(value) => setFilterCategory(value)}>
-                <SelectTrigger className="w-[180px]">
+                <SelectTrigger className="w-full sm:w-[180px]">
                   <SelectValue placeholder="Categoría" />
                 </SelectTrigger>
                 <SelectContent>
@@ -157,6 +157,7 @@ export default function InventarioPage() {
                       <TableCell className="text-center">
                         <Badge variant={status.variant} 
                           className={cn(
+                            'text-xs whitespace-nowrap', // Ensure badge text doesn't wrap aggressively
                             status.variant === 'destructive' && 'bg-red-500 text-white',
                             status.variant === 'outline' && 'border-orange-500 text-orange-600 bg-orange-50',
                             status.variant === 'secondary' && 'bg-yellow-100 text-yellow-700',

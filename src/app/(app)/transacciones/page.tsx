@@ -155,16 +155,16 @@ export default function TransaccionesPage() {
       <Card className="shadow-lg">
         <CardHeader>
           <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
-            <div className="flex flex-col md:flex-row gap-4 items-center flex-grow">
+            <div className="flex flex-col md:flex-row gap-4 items-center flex-grow w-full md:w-auto">
               <Input
                 placeholder="Buscar por descripción o ID..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="max-w-sm flex-grow"
+                className="w-full md:max-w-sm md:flex-grow"
               />
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
                 <Select value={filterType} onValueChange={(value: 'all' | 'Ingreso' | 'Egreso') => setFilterType(value)}>
-                  <SelectTrigger className="w-[150px]">
+                  <SelectTrigger className="w-full sm:w-[150px]">
                     <SelectValue placeholder="Tipo" />
                   </SelectTrigger>
                   <SelectContent>
@@ -174,7 +174,7 @@ export default function TransaccionesPage() {
                   </SelectContent>
                 </Select>
                 <Select value={filterBranch} onValueChange={(value) => setFilterBranch(value)} disabled={isLoadingBranches}>
-                  <SelectTrigger className="w-[180px]">
+                  <SelectTrigger className="w-full sm:w-[180px]">
                     <SelectValue placeholder="Sucursal" />
                   </SelectTrigger>
                   <SelectContent>
@@ -189,7 +189,7 @@ export default function TransaccionesPage() {
                 </Select>
               </div>
             </div>
-            <Button onClick={() => setIsAddModalOpen(true)} className="mt-4 md:mt-0">
+            <Button onClick={() => setIsAddModalOpen(true)} className="mt-4 md:mt-0 w-full md:w-auto">
               <PlusCircle className="mr-2 h-4 w-4" />
               Añadir Transacción
             </Button>
@@ -223,7 +223,7 @@ export default function TransaccionesPage() {
                     <TableCell>{new Date(transaction.fecha).toLocaleDateString('es-ES')}</TableCell>
                     <TableCell>{transaction.descripcion}</TableCell>
                     <TableCell>
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium whitespace-nowrap ${
                         transaction.tipo === 'Ingreso' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
                       }`}>
                         {transaction.tipo}
