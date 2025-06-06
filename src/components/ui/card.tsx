@@ -24,7 +24,7 @@ const CardHeader = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex flex-col space-y-1.5 p-6 overflow-hidden", // Added overflow-hidden
+      "flex flex-col space-y-1.5 p-4 sm:p-6 overflow-hidden", // Default responsive padding
       className
     )}
     {...props}
@@ -63,7 +63,10 @@ const CardContent = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <div ref={ref} className={cn("p-6 pt-0 overflow-hidden", className)} {...props} /> // Added overflow-hidden
+  <div 
+    ref={ref} 
+    className={cn("p-4 pt-0 sm:p-6 sm:pt-0 overflow-hidden", className)} // Default responsive padding
+    {...props} />
 ))
 CardContent.displayName = "CardContent"
 

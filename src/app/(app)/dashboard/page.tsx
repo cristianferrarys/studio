@@ -99,11 +99,11 @@ export default function DashboardPage() {
 
       <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
         <Card className="shadow-lg">
-          <CardHeader className="p-4 sm:p-6">
+          <CardHeader>
             <CardTitle className="font-headline">Rendimiento por Sucursal</CardTitle>
             <CardDescription>Ingresos y gastos por cada sucursal.</CardDescription>
           </CardHeader>
-          <CardContent className="h-[300px] p-4 pt-0 sm:p-6 sm:pt-0">
+          <CardContent className="h-[300px]">
             <ChartContainer config={chartConfig} className="w-full h-full">
               <RechartsBarChart data={branchFinancialData} accessibilityLayer>
                 <XAxis dataKey="name" tickLine={false} axisLine={false} tickMargin={8} />
@@ -121,11 +121,11 @@ export default function DashboardPage() {
         </Card>
 
         <Card className="shadow-lg">
-          <CardHeader className="p-4 sm:p-6">
+          <CardHeader>
             <CardTitle className="font-headline">Actividad Reciente</CardTitle>
              <CardDescription>Un resumen de las últimas actividades.</CardDescription>
           </CardHeader>
-          <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+          <CardContent>
             <ul className="space-y-3">
               <li className="flex items-center gap-3">
                 <div className="p-2 bg-green-100 rounded-full"><DollarSign className="h-4 w-4 text-green-600" /></div>

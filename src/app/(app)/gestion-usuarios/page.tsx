@@ -47,7 +47,7 @@ export default function GestionUsuariosPage() {
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <Card className="shadow-lg">
-          <CardHeader className="p-4 sm:p-6">
+          <CardHeader>
             <div className="mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
               <CardTitle className="font-headline text-xl">Listado de Usuarios</CardTitle>
               <Button className="w-full sm:w-auto">
@@ -85,11 +85,11 @@ export default function GestionUsuariosPage() {
         </Card>
 
         <Card className="shadow-lg">
-          <CardHeader className="p-4 sm:p-6">
+          <CardHeader>
              <CardTitle className="font-headline text-xl">Gestión de Sucursales</CardTitle>
              <CardDescription>Añada nuevas sucursales o visualice las existentes.</CardDescription>
           </CardHeader>
-          <CardContent className="p-4 sm:p-6">
+          <CardContent>
             <div className="space-y-4">
               <div>
                 <h3 className="text-md font-semibold mb-2">Añadir Nueva Sucursal</h3>

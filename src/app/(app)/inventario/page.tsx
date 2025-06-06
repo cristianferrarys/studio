@@ -66,14 +66,14 @@ export default function InventarioPage() {
       <div>
         <PageTitle title="Niveles de Stock" subtitle="Supervise las cantidades de inventario en todas las sucursales." />
         <Card className="shadow-lg">
-          <CardHeader className="p-4 sm:p-6">
+          <CardHeader>
             <div className="flex flex-col md:flex-row gap-4 pt-2">
               <Skeleton className="h-10 w-full md:w-1/3" />
               <Skeleton className="h-10 w-full md:w-1/4" />
               <Skeleton className="h-10 w-full md:w-1/4" />
             </div>
           </CardHeader>
-          <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+          <CardContent>
             {[...Array(5)].map((_, i) => (
               <div key={i} className="flex justify-between p-4 border-b">
                 <Skeleton className="h-4 w-1/5" />
@@ -93,7 +93,7 @@ export default function InventarioPage() {
     <div>
       <PageTitle title="Niveles de Stock" subtitle="Supervise las cantidades de inventario en todas las sucursales." />
       <Card className="shadow-lg">
-        <CardHeader className="p-4 sm:p-6">
+        <CardHeader>
           <div className="flex flex-col md:flex-row gap-4 items-center">
             <Input
               placeholder="Buscar por nombre o ID de producto..."
@@ -129,7 +129,7 @@ export default function InventarioPage() {
             </div>
           </div>
         </CardHeader>
-        <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+        <CardContent>
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>

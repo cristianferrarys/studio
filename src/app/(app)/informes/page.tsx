@@ -50,33 +50,33 @@ export default function InformesPage() {
       
       <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-3 mb-8">
         <Card className="shadow-md">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 p-4 sm:p-6">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Ingresos Totales</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
-          <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+          <CardContent>
             <div className="text-2xl font-bold font-headline text-green-600">
               ${summary.ingresosTotales.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </div>
           </CardContent>
         </Card>
         <Card className="shadow-md">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 p-4 sm:p-6">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Gastos Totales</CardTitle>
             <TrendingDown className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
-          <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+          <CardContent>
             <div className="text-2xl font-bold font-headline text-red-600">
               ${summary.gastosTotales.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </div>
           </CardContent>
         </Card>
         <Card className="shadow-md">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 p-4 sm:p-6">
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Beneficio Neto</CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
-          <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+          <CardContent>
             <div className="text-2xl font-bold font-headline text-primary">
               ${summary.beneficioNeto.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </div>
@@ -86,11 +86,11 @@ export default function InformesPage() {
 
       <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
         <Card className="shadow-lg">
-          <CardHeader className="p-4 sm:p-6">
+          <CardHeader>
             <CardTitle className="font-headline">Rendimiento por Sucursal</CardTitle>
             <CardDescription>Desglose de ingresos y gastos por cada ubicación.</CardDescription>
           </CardHeader>
-          <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+          <CardContent>
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>
@@ -123,11 +123,11 @@ export default function InformesPage() {
         </Card>
 
         <Card className="shadow-lg">
-          <CardHeader className="p-4 sm:p-6">
+          <CardHeader>
             <CardTitle className="font-headline">Resumen de Gastos por Categoría</CardTitle>
             <CardDescription>Distribución de los gastos en diferentes categorías.</CardDescription>
           </CardHeader>
-          <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+          <CardContent>
             <div className="overflow-x-auto">
               <Table>
                 <TableHeader>

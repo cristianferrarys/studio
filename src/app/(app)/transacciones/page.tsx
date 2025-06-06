@@ -123,7 +123,7 @@ export default function TransaccionesPage() {
       <div>
         <PageTitle title="Listado de Transacciones" subtitle="Explore todas las transacciones financieras registradas." />
         <Card className="shadow-lg">
-          <CardHeader className="p-4 sm:p-6">
+          <CardHeader>
              <div className="flex justify-between items-center">
               <CardTitle className="font-headline">Filtros y Acciones</CardTitle>
                <Skeleton className="h-10 w-40" />
@@ -134,7 +134,7 @@ export default function TransaccionesPage() {
               <Skeleton className="h-10 w-full md:w-1/4" />
             </div>
           </CardHeader>
-          <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+          <CardContent>
             {[...Array(5)].map((_, i) => (
               <div key={i} className="flex justify-between p-4 border-b">
                 <Skeleton className="h-4 w-1/4" />
@@ -153,7 +153,7 @@ export default function TransaccionesPage() {
     <div>
       <PageTitle title="Listado de Transacciones" subtitle="Explore todas las transacciones financieras registradas." />
       <Card className="shadow-lg">
-        <CardHeader className="p-4 sm:p-6">
+        <CardHeader>
           <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
             <div className="flex flex-col md:flex-row gap-4 items-center flex-grow w-full md:w-auto">
               <Input
@@ -195,7 +195,7 @@ export default function TransaccionesPage() {
             </Button>
           </div>
         </CardHeader>
-        <CardContent className="p-4 pt-0 sm:p-6 sm:pt-0">
+        <CardContent>
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
