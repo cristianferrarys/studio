@@ -154,15 +154,15 @@ export default function TransaccionesPage() {
       <PageTitle title="Listado de Transacciones" subtitle="Explore todas las transacciones financieras registradas." />
       <Card className="shadow-lg">
         <CardHeader>
-          <div className="flex flex-col md:flex-row gap-4 justify-between items-center">
-            <div className="flex flex-col md:flex-row gap-4 items-center flex-grow w-full md:w-auto">
+          <div className="flex flex-col md:flex-row gap-2 md:gap-4 justify-between md:items-center">
+            <div className="flex flex-col md:flex-row gap-2 md:gap-4 md:items-center flex-grow w-full md:w-auto">
               <Input
                 placeholder="Buscar por descripción o ID..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full md:max-w-sm md:flex-grow"
               />
-              <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+              <div className="flex flex-col sm:flex-row sm:gap-2 w-full md:w-auto">
                 <Select value={filterType} onValueChange={(value: 'all' | 'Ingreso' | 'Egreso') => setFilterType(value)}>
                   <SelectTrigger className="w-full sm:w-[150px]">
                     <SelectValue placeholder="Tipo" />
@@ -189,7 +189,7 @@ export default function TransaccionesPage() {
                 </Select>
               </div>
             </div>
-            <Button onClick={() => setIsAddModalOpen(true)} className="mt-4 md:mt-0 w-full md:w-auto">
+            <Button onClick={() => setIsAddModalOpen(true)} className="mt-2 md:mt-0 w-full md:w-auto">
               <PlusCircle className="mr-2 h-4 w-4" />
               Añadir Transacción
             </Button>
@@ -253,4 +253,3 @@ export default function TransaccionesPage() {
     </div>
   );
 }
-

@@ -94,14 +94,14 @@ export default function InventarioPage() {
       <PageTitle title="Niveles de Stock" subtitle="Supervise las cantidades de inventario en todas las sucursales." />
       <Card className="shadow-lg">
         <CardHeader>
-          <div className="flex flex-col md:flex-row gap-4 items-center">
+          <div className="flex flex-col md:flex-row gap-2 md:gap-4 md:items-center">
             <Input
               placeholder="Buscar por nombre o ID de producto..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full md:max-w-sm md:flex-grow"
             />
-             <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+             <div className="flex flex-col sm:flex-row sm:gap-2 w-full md:w-auto">
               <Select value={filterBranch} onValueChange={(value) => setFilterBranch(value)} disabled={isLoadingBranches}>
                 <SelectTrigger className="w-full sm:w-[180px]">
                   <SelectValue placeholder="Sucursal" />
@@ -179,4 +179,3 @@ export default function InventarioPage() {
     </div>
   );
 }
-
