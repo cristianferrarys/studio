@@ -1,4 +1,3 @@
-
 [
   { "id": "p001", "nombre": "Portátil Gamer XZ", "sucursal": "Central", "cantidad": 15, "minimo": 5, "categoria": "Portátiles" },
   { "id": "p002", "nombre": "Monitor Curvo 32\"", "sucursal": "Norte", "cantidad": 8, "minimo": 3, "categoria": "Monitores" },
