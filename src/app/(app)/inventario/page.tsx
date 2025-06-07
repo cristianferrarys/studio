@@ -67,7 +67,7 @@ export default function InventarioPage() {
         <PageTitle title="Niveles de Stock" subtitle="Supervise las cantidades de inventario en todas las sucursales." />
         <Card className="shadow-lg">
           <CardHeader>
-            <div className="flex flex-col md:flex-row gap-4 pt-2">
+            <div className="flex flex-col md:flex-row gap-2 md:gap-4 md:items-center">
               <Skeleton className="h-10 w-full md:w-1/3" />
               <Skeleton className="h-10 w-full md:w-1/4" />
               <Skeleton className="h-10 w-full md:w-1/4" />
@@ -157,7 +157,7 @@ export default function InventarioPage() {
                       <TableCell className="text-center">
                         <Badge variant={status.variant} 
                           className={cn(
-                            'text-xs whitespace-nowrap', // Ensure badge text doesn't wrap aggressively
+                            'text-xs', // Eliminado whitespace-nowrap
                             status.variant === 'destructive' && 'bg-red-500 text-white',
                             status.variant === 'outline' && 'border-orange-500 text-orange-600 bg-orange-50',
                             status.variant === 'secondary' && 'bg-yellow-100 text-yellow-700',
