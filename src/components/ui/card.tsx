@@ -9,7 +9,7 @@ const Card = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-lg border bg-card text-card-foreground shadow-sm overflow-hidden", // Added overflow-hidden
+      "rounded-lg border bg-card text-card-foreground shadow-sm overflow-hidden", 
       className
     )}
     {...props}
@@ -24,7 +24,7 @@ const CardHeader = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "flex flex-col space-y-1.5 p-4 sm:p-6 overflow-hidden", // Default responsive padding
+      "flex flex-col space-y-1.5 p-4 sm:p-6 overflow-hidden", 
       className
     )}
     {...props}
@@ -33,13 +33,13 @@ const CardHeader = React.forwardRef<
 CardHeader.displayName = "CardHeader"
 
 const CardTitle = React.forwardRef<
-  HTMLDivElement, // Corrected from HTMLParagraphElement to HTMLDivElement for consistency
-  React.HTMLAttributes<HTMLHeadingElement> // Corrected from HTMLParagraphElement to HTMLHeadingElement
+  HTMLDivElement, 
+  React.HTMLAttributes<HTMLHeadingElement> 
 >(({ className, ...props }, ref) => (
-  <div // Changed from h3 to div to match original structure, assuming it's styled as a title
+  <div 
     ref={ref}
     className={cn(
-      "text-xl sm:text-2xl font-semibold leading-none tracking-tight break-words", // Changed text-2xl to text-xl sm:text-2xl
+      "font-semibold leading-none tracking-tight break-words text-xl sm:text-2xl", 
       className
     )}
     {...props}
@@ -48,10 +48,10 @@ const CardTitle = React.forwardRef<
 CardTitle.displayName = "CardTitle"
 
 const CardDescription = React.forwardRef<
-  HTMLDivElement, // Corrected from HTMLParagraphElement to HTMLDivElement
+  HTMLDivElement, 
   React.HTMLAttributes<HTMLParagraphElement>
 >(({ className, ...props }, ref) => (
-  <div // Changed from p to div
+  <div 
     ref={ref}
     className={cn("text-sm text-muted-foreground break-words", className)}
     {...props}
@@ -65,7 +65,7 @@ const CardContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div 
     ref={ref} 
-    className={cn("p-4 pt-0 sm:p-6 sm:pt-0 overflow-hidden", className)} // Default responsive padding
+    className={cn("p-4 pt-0 sm:p-6 sm:pt-0 overflow-hidden min-w-0", className)} 
     {...props} />
 ))
 CardContent.displayName = "CardContent"
