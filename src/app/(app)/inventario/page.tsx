@@ -11,6 +11,7 @@ import type { InventoryItem } from '@/types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/lib/utils';
 import { useBranches } from '@/contexts/BranchContext'; // Import useBranches
+import { Separator } from '@/components/ui/separator'; // Added missing import
 
 export default function InventarioPage() {
   const [inventory, setInventory] = useState<InventoryItem[]>([]);
