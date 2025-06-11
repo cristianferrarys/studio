@@ -11,7 +11,8 @@ import { ArrowUpDown, PlusCircle } from 'lucide-react';
 import type { Transaction } from '@/types';
 import { Skeleton } from '@/components/ui/skeleton';
 import { AddTransactionForm, type TransactionFormData } from '@/components/custom/AddTransactionForm';
-import { useBranches } from '@/contexts/BranchContext'; // Import useBranches
+import { useBranches } from '@/contexts/BranchContext'; 
+import { Separator } from '@/components/ui/separator';
 
 type SortKey = keyof Transaction;
 
@@ -24,7 +25,7 @@ export default function TransaccionesPage() {
   const [sortConfig, setSortConfig] = useState<{ key: SortKey; direction: 'ascending' | 'descending' } | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
-  const { branches: contextBranches, isLoadingBranches } = useBranches(); // Get branches from context
+  const { branches: contextBranches, isLoadingBranches } = useBranches(); 
 
   useEffect(() => {
     async function fetchData() {
@@ -48,15 +49,14 @@ export default function TransaccionesPage() {
     return ['all', ...contextBranches];
   }, [contextBranches]);
 
-  // For AddTransactionForm, it expects just the branch names, not 'all'
   const branchesForForm = useMemo(() => {
     return contextBranches;
   }, [contextBranches]);
 
   const handleAddTransaction = (data: TransactionFormData) => {
     const newTransaction: Transaction = {
-      id: `t${Math.random().toString(36).substring(2, 9)}`, // Simple unique ID
-      fecha: new Date().toISOString().split('T')[0], // Current date
+      id: `t${Math.random().toString(36).substring(2, 9)}`, 
+      fecha: new Date().toISOString().split('T')[0], 
       ...data,
       monto: Number(data.monto)
     };
@@ -196,7 +196,8 @@ export default function TransaccionesPage() {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
+          {/* Desktop Table View */}
+          <div className="overflow-x-auto hidden md:block">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -238,6 +239,46 @@ export default function TransaccionesPage() {
               </TableBody>
             </Table>
           </div>
+          {/* Mobile Card View */}
+          <div className="md:hidden space-y-4">
+            {filteredTransactions.map((transaction) => (
+              <Card key={transaction.id} className="shadow-md">
+                <CardContent className="p-4 space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs font-semibold text-muted-foreground">Fecha</span>
+                    <span className="text-sm">{new Date(transaction.fecha).toLocaleDateString('es-ES')}</span>
+                  </div>
+                  <Separator />
+                  <div>
+                    <span className="text-xs font-semibold text-muted-foreground block mb-0.5">Descripción</span>
+                    <p className="text-sm">{transaction.descripcion}</p>
+                  </div>
+                  <Separator />
+                  <div className="grid grid-cols-2 gap-x-4 gap-y-2 pt-1">
+                    <div>
+                        <span className="text-xs font-semibold text-muted-foreground block mb-0.5">Tipo</span>
+                        <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                            transaction.tipo === 'Ingreso' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'
+                        }`}>
+                            {transaction.tipo}
+                        </span>
+                    </div>
+                    <div>
+                        <span className="text-xs font-semibold text-muted-foreground block mb-0.5">Monto</span>
+                        <span className={`text-sm font-semibold ${transaction.tipo === 'Ingreso' ? 'text-green-600' : 'text-red-600'}`}>
+                        ${transaction.monto.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </span>
+                    </div>
+                  </div>
+                  <Separator />
+                  <div className="flex justify-between items-center pt-1">
+                    <span className="text-xs font-semibold text-muted-foreground">Sucursal</span>
+                    <span className="text-sm">{transaction.sucursal}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
           {filteredTransactions.length === 0 && (
             <p className="text-center text-muted-foreground py-8">No se encontraron transacciones que coincidan con los filtros.</p>
           )}
@@ -247,7 +288,7 @@ export default function TransaccionesPage() {
         isOpen={isAddModalOpen} 
         onOpenChange={setIsAddModalOpen}
         onSubmitForm={handleAddTransaction}
-        branches={branchesForForm} // Pass branches from context
+        branches={branchesForForm} 
         isLoadingBranches={isLoadingBranches}
       />
     </div>

@@ -130,7 +130,8 @@ export default function InventarioPage() {
           </div>
         </CardHeader>
         <CardContent>
-          <div className="overflow-x-auto">
+          {/* Desktop Table View */}
+          <div className="overflow-x-auto hidden md:block">
             <Table>
               <TableHeader>
                 <TableRow>
@@ -157,7 +158,7 @@ export default function InventarioPage() {
                       <TableCell className="text-center">
                         <Badge variant={status.variant} 
                           className={cn(
-                            'text-xs', // Eliminado whitespace-nowrap
+                            'text-xs',
                             status.variant === 'destructive' && 'bg-red-500 text-white',
                             status.variant === 'outline' && 'border-orange-500 text-orange-600 bg-orange-50',
                             status.variant === 'secondary' && 'bg-yellow-100 text-yellow-700',
@@ -171,6 +172,60 @@ export default function InventarioPage() {
               </TableBody>
             </Table>
           </div>
+          {/* Mobile Card View */}
+          <div className="md:hidden space-y-4">
+            {filteredInventory.map((item) => {
+              const status = getStockStatus(item);
+              return (
+                <Card key={item.id + item.sucursal} className="shadow-md">
+                  <CardContent className="p-4 space-y-2">
+                    <div className="flex justify-between items-start">
+                      <span className="text-xs font-semibold text-muted-foreground">ID Producto</span>
+                      <span className="text-xs font-mono text-right">{item.id}</span>
+                    </div>
+                     <Separator />
+                    <div>
+                      <span className="text-xs font-semibold text-muted-foreground block mb-0.5">Nombre</span>
+                      <p className="text-sm font-medium">{item.nombre}</p>
+                    </div>
+                     <Separator />
+                    <div className="grid grid-cols-2 gap-x-4 gap-y-2">
+                        <div>
+                            <span className="text-xs font-semibold text-muted-foreground block mb-0.5">Categoría</span>
+                            <span className="text-sm">{item.categoria}</span>
+                        </div>
+                        <div>
+                            <span className="text-xs font-semibold text-muted-foreground block mb-0.5">Sucursal</span>
+                            <span className="text-sm">{item.sucursal}</span>
+                        </div>
+                        <div>
+                            <span className="text-xs font-semibold text-muted-foreground block mb-0.5">Cantidad</span>
+                            <span className="text-sm font-semibold">{item.cantidad}</span>
+                        </div>
+                        <div>
+                            <span className="text-xs font-semibold text-muted-foreground block mb-0.5">Mínimo</span>
+                            <span className="text-sm">{item.minimo}</span>
+                        </div>
+                    </div>
+                    <Separator />
+                    <div className="flex justify-between items-center pt-1">
+                      <span className="text-sm font-semibold text-muted-foreground">Estado</span>
+                       <Badge variant={status.variant} 
+                          className={cn(
+                            'text-xs',
+                            status.variant === 'destructive' && 'bg-red-500 text-white',
+                            status.variant === 'outline' && 'border-orange-500 text-orange-600 bg-orange-50',
+                            status.variant === 'secondary' && 'bg-yellow-100 text-yellow-700',
+                            status.variant === 'default' && 'bg-green-100 text-green-700'
+                          )}
+                        >{status.text}</Badge>
+                    </div>
+                  </CardContent>
+                </Card>
+              );
+            })}
+          </div>
+
            {filteredInventory.length === 0 && (
             <p className="text-center text-muted-foreground py-8">No se encontraron productos que coincidan con los filtros.</p>
           )}
